@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { memo } from 'react';
 import { Counter } from './todoCounter.style';
 
-const TodoCounter = ({ n = 0 }: any) => {
-    const counter = n > 1 ? `${n} tasks remaining` : `${n} task remaining`;
-    return <Counter>{counter}</Counter>;
-};
+interface TodoLength {
+    num: number;
+}
+
+const TodoCounter: React.FC<TodoLength> = memo(({ num = 0 }) => {
+    const counter = num > 1 ? `${num} tasks remaining` : `${num} task remaining`;
+    return <Counter>{num !== 0 ? counter : 'There are no tasks!'}</Counter>;
+});
 
 export default TodoCounter;

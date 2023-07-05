@@ -1,29 +1,37 @@
 import { Create, CreateWrapper, CreateInp, CreateBtn } from './todoCreate.style';
-import TodoFilter from '../todoFilter/TodoFilter';
-import { useState } from 'react';
+import React, { useState } from 'react';
+import { v4 } from 'uuid';
+import { ITodoData } from '../../data/TodoData';
 
-const TodoCreate = (props: any) => {
-    const [createTask, setCreateTask] = useState('');
+interface CreateProps {
+    todo: ITodoData[];
+    setTodo: (value: ITodoData[]) => void;
+}
 
-    const addTodoText = (e: React.ChangeEvent<HTMLInputElement>) => {
-        let target = e.target.value;
-        setCreateTask(target);
-    };
+const TodoCreate: React.FC<CreateProps> = ({ todo, setTodo }) => {
+    const [task, setTask] = useState('');
 
-    const createNewTask = () => {
-        if (createTask.length < 4) return;
-        console.log(createTask);
-        props.setText(createTask);
-        setCreateTask('');
+    const createNewTask = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        e.preventDefault();
+
+        if (task.length < 4) return;
+        const newTask = {
+            id: v4(),
+            title: task,
+            completed: false,
+        };
+
+        const newTasks = [newTask, ...todo];
+        setTodo(newTasks);
+        setTask('');
     };
 
     return (
         <Create>
             <CreateWrapper>
-                <CreateInp value={createTask} id='createInput' onChange={addTodoText} placeholder='New Todo...' />
+                <CreateInp value={task} type='text' onChange={e => setTask(e.target.value)} placeholder='New Todo...' />
                 <CreateBtn onClick={createNewTask}>Add</CreateBtn>
             </CreateWrapper>
-            <TodoFilter />
         </Create>
     );
 };

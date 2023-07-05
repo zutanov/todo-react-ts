@@ -2,7 +2,7 @@ import styled from 'styled-components';
 
 export const Create = styled.div``;
 
-export const CreateWrapper = styled.div`
+export const CreateWrapper = styled.form`
     display: flex;
     justify-content: space-between;
     margin-bottom: 10px;
@@ -26,7 +26,6 @@ export const CreateBtn = styled.button`
     border: 2px solid #bd93f9;
     transition: 0.4s;
     &:hover {
-        font-size: 15px;
         background-color: #bd93f9;
         color: #fff;
     }
